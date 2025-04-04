@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'ArialUnicode';
+  src: url('/fonts/custom-font.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'ArialUnicode', sans-serif;
+}
