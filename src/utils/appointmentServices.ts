@@ -1,41 +1,67 @@
-
 import type { appointmentService } from '../lib/auth/types';
-import { api } from '@/services/api'; // eslint-disable-line no-unused-vars   // Adjusted the path to match the correct location of the file in the project structure   // Adjusted the path to match the correct location of the file in the project structure  // Adjusted the path to match the correct location of the file in the project structure   // Adjusted the path to match the correct location of the file in the project structure
+import { fetchWithRetry } from '@/services/api/retry';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+
+async function fetchJson<T>(url: string, options: RequestInit = {}): Promise<T> {
+  const response = await fetchWithRetry<T>(`${API_BASE_URL}${url}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+    ...options,
+  });
+  return response;
+}
 
 export const appointmentServiceAPI = {
-  async getAppointmentService() {
-    const response = await api.get<appointmentService[]>('/appointments');
-    return response;
+  async getAppointmentService(): Promise<appointmentService[]> {
+    return await fetchJson('/appointments');
   },
 
-  async getAvailability() {
+  async getAvailability(): Promise<{ time: string; available: boolean }[]> {
     return Promise.resolve([
       { time: '10:00 AM', available: true },
       { time: '11:00 AM', available: false },
     ]);
   },
 
-  getAll: () => api.get<appointmentService[]>('/appointments'),
-
-  getById: async (id: string) => {
-    const response = await api.get<appointmentService>(`/appointments/${id}`);
-    return response;
+  getAll: (): Promise<appointmentService[]> => {
+    return fetchJson('/appointments');
   },
 
-  create: (data: Partial<appointmentService>) =>
-    api.post<appointmentService>('/appointments', data),
+  getById: async (id: string): Promise<appointmentService> => {
+    return await fetchJson(`/appointments/${id}`);
+  },
 
-  update: (id: string, data: Partial<appointmentService>) =>
-    api.put<appointmentService>(`/appointments/${id}`, data),
+  create: (data: Partial<appointmentService>): Promise<appointmentService> => {
+    return fetchJson('/appointments', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
 
-  delete: (id: string) => api.delete<void>(`/appointments/${id}`),
+  update: (id: string, data: Partial<appointmentService>): Promise<appointmentService> => {
+    return fetchJson(`/appointments/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
 
-  initiateAppointment: async (serviceType: string) => {
+  delete: (id: string): Promise<void> => {
+    return fetchJson(`/appointments/${id}`, {
+      method: 'DELETE',
+    });
+  },
+
+  initiateAppointment: async (serviceType: string): Promise<string> => {
     try {
-      const response = await api.post<{ redirectUrl: string }>(
+      const response = await fetchJson<{ redirectUrl: string }>(
         '/appointments/initiate',
-        { serviceType }
+        {
+          method: 'POST',
+          body: JSON.stringify({ serviceType }),
+        }
       );
       return response.redirectUrl;
     } catch (error) {

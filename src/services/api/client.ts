@@ -13,32 +13,32 @@ async function fetchJson<T>(url: string, options: RequestInit = {}): Promise<T> 
   return response;
 }
 
-export namespace clientService {
-  export function getById(clientId: string): Promise<any> {
+export const clientService = {
+  getById(clientId: string): Promise<any> {
     return fetchJson(`/clients/${clientId}`);
-  }
+  },
 
-  export function getAll(): Promise<any> {
+  getAll(): Promise<any> {
     return fetchJson('/clients');
-  }
+  },
 
-  export function create(client: any): Promise<any> {
+  create(client: any): Promise<any> {
     return fetchJson('/clients', {
       method: 'POST',
       body: JSON.stringify(client),
     });
-  }
+  },
 
-  export function update(clientId: string, client: any): Promise<any> {
+  update(clientId: string, client: any): Promise<any> {
     return fetchJson(`/clients/${clientId}`, {
       method: 'PUT',
       body: JSON.stringify(client),
     });
-  }
+  },
 
-  export function deleteClient(clientId: string): Promise<void> {
+  remove(clientId: string): Promise<void> {
     return fetchJson(`/clients/${clientId}`, {
       method: 'DELETE',
     });
   }
-}
+};
