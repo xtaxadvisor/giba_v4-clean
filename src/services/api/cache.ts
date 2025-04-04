@@ -1,24 +1,34 @@
-import { setupCache } from 'axios-cache-adapter';
-import { AxiosRequestConfig } from 'axios';
+type CacheKey = string;
+type CacheEntry = {
+  value: any;
+  timestamp: number;
+};
 
-export const cache = setupCache({
-  maxAge: 15 * 60 * 1000, // 15 minutes
-  store: undefined, // Replace with a proper async store if needed
-  exclude: {
-    query: false,
-    methods: ['post', 'put', 'delete']
+const cacheStore = new Map<CacheKey, CacheEntry>();
+
+function generateKey(url: string, method: string, params?: any): string {
+  const serializedParams = params ? `?${JSON.stringify(params)}` : '';
+  return `${method.toUpperCase()}:${url}${serializedParams}`;
+}
+
+export const cache = {
+  async get(key: string) {
+    const entry = cacheStore.get(key);
+    return entry?.value;
   },
-  key: (req: AxiosRequestConfig) => {
-    const url = req.url || ''; // Handle undefined url
-    const serialized = req.params ? `${url}?${JSON.stringify(req.params)}` : url;
-    return `${req.method}:${serialized}`;
+  async set(key: string, value: any) {
+    cacheStore.set(key, { value, timestamp: Date.now() });
   },
-  invalidate: async (cfg: any) => {
-    const invalidatePatterns = cfg.invalidateCache as string[];
-    if (invalidatePatterns) {
-      await Promise.all(
-        invalidatePatterns.map(pattern => (cache.store as Storage).removeItem(pattern))
-      );
+  async remove(key: string) {
+    cacheStore.delete(key);
+  },
+  async invalidate(keys: string[]) {
+    for (const key of keys) {
+      cacheStore.delete(key);
     }
-  }
-});
+  },
+  async has(key: string) {
+    return cacheStore.has(key);
+  },
+  key: generateKey
+};

@@ -1,19 +1,32 @@
-import type { Thread } from '../../types/messaging'; // Adjust path as needed
-import axios from 'axios';
+import type { Thread } from '../../types/messaging';
 
-export const customApi = axios.create({
-  baseURL: 'https://your-api-base-url.com', // Replace with your API base URL
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const API_BASE_URL = 'https://your-api-base-url.com';
+
+async function fetchJson<T>(
+  url: string,
+  options: RequestInit = {}
+): Promise<T> {
+  const response = await fetch(`${API_BASE_URL}${url}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+    ...options,
+  });
+
+  if (!response.ok) {
+    throw new Error(`API error: ${response.status}`);
+  }
+
+  return response.json();
+}
+
 export const threadService = {
   /**
    * Get all message threads
    */
   getAll: async (): Promise<Thread[]> => {
-    const response = await customApi.get<Thread[]>('/threads');
-    return response.data;
+    return await fetchJson<Thread[]>('/threads');
   },
 
   /**
@@ -21,8 +34,10 @@ export const threadService = {
    * @param data - Thread creation payload
    */
   create: async (data: Partial<Thread>): Promise<Thread> => {
-    const response = await customApi.post<Thread>('/threads', data);
-    return response.data;
+    return await fetchJson<Thread>('/threads', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
   },
 
   /**
@@ -30,6 +45,8 @@ export const threadService = {
    * @param id - Thread ID
    */
   delete: async (id: string): Promise<void> => {
-    await customApi.delete(`/threads/${id}`);
-  }
+    await fetchJson(`/threads/${id}`, {
+      method: 'DELETE',
+    });
+  },
 };

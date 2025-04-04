@@ -13,7 +13,7 @@
   ],
   "author": "Protax Advisors",
   "license": "MIT",
-  "bugs": { 
+  "bugs": {
     "node": ">=16.0.0"
   },
   "scripts": {
@@ -41,7 +41,6 @@
     "@tanstack/react-query-devtools": "5.17.19",
     "@types/dompurify": "^3.0.5",
     "axios": "^1.8.4",
-    "axios-cache-adapter": "^2.7.3",
     "axios-extensions": "^3.1.6",
     "chart.js": "4.4.1",
     "date-fns": "3.3.1",
@@ -83,5 +82,3 @@
     "node": ">=14.17.0"
   }
 }
-
-
