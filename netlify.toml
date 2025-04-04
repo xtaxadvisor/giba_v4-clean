@@ -35,7 +35,7 @@
       script-src 'self' 'unsafe-inline' 'unsafe-eval';
       style-src 'self' 'unsafe-inline';
       img-src 'self' data: https://*.unsplash.com https://*.supabase.co https://storage.googleapis.com;
-      connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.openai.com;
+      connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.openai.com https://o*.ingest.us.sentry.io;
       frame-ancestors 'none';
     """
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"

@@ -8,6 +8,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter } from 'react-router-dom';
 import { SupabaseProvider } from './contexts/SupabaseContext';
 import { AppRoutes } from './routes';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; // Import QueryClient and QueryClientProvider
+
 // Initialize Sentry
 Sentry.init({
   dsn: "https://80cda50e3cf066a524158b31ca370667@o4508848989929472.ingest.us.sentry.io/4508848996155392",
@@ -21,6 +23,8 @@ if (!rootElement) throw new Error('Root element not found');
 
 const root = createRoot(rootElement);
 
+const queryClient = new QueryClient(); // Initialize QueryClient
+
 root.render(
   <React.StrictMode>
     <Sentry.ErrorBoundary fallback={
@@ -31,13 +35,15 @@ root.render(
         </div>
       </div>
   }>
-    <BrowserRouter>
-      <SupabaseProvider>
-        <AuthProvider>
-          <AppRoutes />
-        </AuthProvider>
-      </SupabaseProvider>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}> {/* Wrap the app */}
+      <BrowserRouter>
+        <SupabaseProvider>
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
+        </SupabaseProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
   </Sentry.ErrorBoundary>
 </React.StrictMode> ); export default root;   
 // Hot Module Replacement (HMR) support
@@ -47,4 +53,4 @@ if (import.meta.hot) {
     root.unmount();
   }
   );
-} 
+}
