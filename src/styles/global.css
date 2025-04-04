@@ -1,3 +1,4 @@
+/* Load custom font from public/fonts directory */
 @font-face {
   font-family: 'ArialUnicode';
   src: url('/fonts/custom-font.woff2') format('woff2');

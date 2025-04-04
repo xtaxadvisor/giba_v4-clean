@@ -3,7 +3,7 @@
 @import "tailwindcss/utilities";
 @font-face {
   font-family: "CustomFont";
-  src: url("/fonts/publicfonts/custom-font.woff2") format("woff2");
+  src: url("/fonts/custom-font.woff2") format("woff2");
   font-display: swap;
 }
 
