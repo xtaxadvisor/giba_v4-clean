@@ -1,5 +1,7 @@
 import { fetchWithRetry } from './retry';
 
+// Removed redundant namespace declaration for clientService
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://your-api-url.com';
 
 async function fetchJson<T>(url: string, options: RequestInit = {}): Promise<T> {

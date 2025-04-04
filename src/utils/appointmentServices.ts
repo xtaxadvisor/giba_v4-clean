@@ -68,5 +68,12 @@ export const appointmentServiceAPI = {
       console.error('Failed to initiate appointment:', error);
       throw error;
     }
-  }
+  },
+
+  // Aliases for backward compatibility
+  deleteClient: (id: string): Promise<void> => {
+    return fetchJson(`/appointments/${id}`, {
+      method: 'DELETE',
+    });
+  },
 };

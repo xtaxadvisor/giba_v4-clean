@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import * as clientService from '../services/api/client';
+import { clientService } from '../services/api/client';
 import { useNotificationStore } from '../lib/store';
 
 const CLIENT_KEY = 'client';
@@ -27,7 +27,7 @@ export function useClient(clientId: string) {
 
   const deleteClientMutation = useMutation({
     mutationFn: async (clientId: string): Promise<void> => {
-      await clientService.deleteClient(clientId);
+      await clientService.remove(clientId);
     },
     onMutate: async (id: string) => {
       await queryClient.cancelQueries({ queryKey: [CLIENT_KEY, id] });
@@ -91,7 +91,7 @@ export function useClients() {
   });
 
   const deleteClientMutation = useMutation({
-    mutationFn: async (clientId: string) => clientService.deleteClient(clientId),
+    mutationFn: async (clientId: string) => clientService.remove(clientId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [CLIENTS_KEY] });
       addNotification('Client deleted successfully', 'success');
