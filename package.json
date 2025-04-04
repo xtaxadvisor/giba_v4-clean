@@ -18,7 +18,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm install --force && tsc && vite build",
+    "build": "npm install --force --legacy-peer-deps && tsc && vite build",
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -82,4 +82,6 @@
   "engines": {
     "node": ">=14.17.0"
   }
+}
+
 }
