@@ -2,7 +2,20 @@
   "name": "protaxadvisors",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
+  "description": "Protax Advisors - A comprehensive tax advisory platform",
+  "keywords": [
+    "protaxadvisors",
+    "tax",
+    "advisory",
+    "platform",
+    "financial",
+    "services"
+  ],
+  "author": "Protax Advisors",
+  "license": "MIT",
+  "bugs": { 
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -65,5 +78,8 @@
     "typescript": "5.3.3",
     "vite": "^6.2.4",
     "vitest": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=14.17.0"
   }
 }
