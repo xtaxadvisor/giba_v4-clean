@@ -24,3 +24,36 @@ export default function ClientPortal() {
     </Routes>
   );
 }
+
+// Inside Calendar component
+import { useState } from 'react';
+
+const LocalCalendar = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleNewEvent = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  return (
+    <div>
+      <button onClick={handleNewEvent} className="btn-primary">
+        + New Event
+      </button>
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Create New Event</h2>
+            <p>This is a placeholder for your BookingForm or BookingModal.</p>
+            <button onClick={closeModal}>Close</button>
+          </div>
+        </div>
+      )}
+      {/* Other LocalCalendar content */}
+    </div>
+  );
+};

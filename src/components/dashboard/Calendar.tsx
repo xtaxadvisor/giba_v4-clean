@@ -49,6 +49,7 @@ export function Calendar() {
       location: 'Conference Room A'
     }
   ]);
+  const [showModal, setShowModal] = useState(false);
 
   const daysInMonth = new Date(
     currentDate.getFullYear(),
@@ -100,7 +101,7 @@ export function Calendar() {
             <Button variant="outline" icon={ChevronRight} />
           </div>
         </div>
-        <Button variant="primary" icon={Plus}>
+        <Button variant="primary" icon={Plus} onClick={() => setShowModal(true)}>
           New Event
         </Button>
       </div>
@@ -179,6 +180,19 @@ export function Calendar() {
           </div>
         </div>
       </div>
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h2 className="text-xl font-bold mb-4">Create New Event</h2>
+            <p className="text-sm text-gray-500 mb-4">This is a placeholder for the booking form.</p>
+            <div className="flex justify-end">
+              <Button variant="outline" onClick={() => setShowModal(false)}>
+                Close
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

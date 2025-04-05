@@ -13,7 +13,7 @@ export default function Dashboard() {
     <DashboardLayout>
       <Routes>
         <Route path="/" element={<DashboardHome />} />
-        <Route path="/consultations" element={<ConsultationList />} />
+        <Route path="consultations" element={<ConsultationList />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/calendar" element={<Calendar />} />
