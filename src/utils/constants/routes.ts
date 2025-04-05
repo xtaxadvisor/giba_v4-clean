@@ -1,4 +1,4 @@
-  export const ROUTES = {
+export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
   REGISTER: '/register',
@@ -6,6 +6,8 @@
   ADMIN: '/admin',
   PROFESSIONAL: '/professional',
   INVESTOR: '/investor',
+  STUDENT: '/student',
+  CLIENT: '/client',
   SERVICES: '/services',
   SAME_DAY_SERVICES: '/same-day-services',
   VIDEOS: '/browse-videos',
@@ -17,6 +19,8 @@ export const PROTECTED_ROUTES = [
   ROUTES.ADMIN,
   ROUTES.PROFESSIONAL,
   ROUTES.INVESTOR,
+  ROUTES.STUDENT,
+  ROUTES.CLIENT,
 ] as const;
 
 export const PUBLIC_ROUTES = [

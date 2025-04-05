@@ -1,4 +1,4 @@
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link, useLocation, Outlet } from 'react-router-dom';
 import { 
   Home, 
   FileText, 
@@ -22,14 +22,14 @@ const menuItems = [
   { title: 'Consultations', href: '/client/consultations', icon: Video },
   { title: 'Finances', href: '/client/finances', icon: DollarSign },
   { title: 'Tax Planning', href: '/client/tax-planning', icon: TrendingUp },
-  { title: 'Settings', href: '/client/settings', icon: Settings },
-];
+    { title: 'Settings', href: '/client/settings', icon: Settings },
+  ];
 
-export function ClientLayout({ children }: { children: React.ReactNode }) {
+export function ClientLayout() {
   // Development mock user
   const user = {
     name: 'Development Client',
-    role: 'client'
+    role: 'client',
   };
 
   const navigate = useNavigate();
@@ -134,7 +134,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         </aside>
 
         <main className="flex-1 ml-64 p-8" role="main">
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>

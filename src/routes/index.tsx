@@ -12,6 +12,7 @@ const LoginPage = React.lazy(() => import('../pages/LoginPage'));
 const RegisterPage = React.lazy(() => import('../pages/RegisterPage'));
 const ServiceCatalog = React.lazy(() => import('../pages/services/ServiceCatalog'));
 const SameDayServices = React.lazy(() => import('../pages/services/SameDayServices'));
+const ConsultationPage = React.lazy(() => import('../pages/consultation/ConsultationPage'));
 const VideoLibrary = React.lazy(() => import('../pages/videos/VideoLibrary'));
 const VideoDetail = React.lazy(() => import('../pages/videos/VideoDetail'));
 const AdminPortal = React.lazy(() => import('../pages/admin/AdminPortal'));
@@ -44,6 +45,11 @@ export function AppRoutes() {
       <Route path="/same-day-services" element={
         <Suspense fallback={<LoadingSpinner />}>
           <SameDayServices />
+        </Suspense>
+      } />
+      <Route path="/consultation" element={
+        <Suspense fallback={<LoadingSpinner />}>
+          <ConsultationPage />
         </Suspense>
       } />
       <Route path="/calculator" element={

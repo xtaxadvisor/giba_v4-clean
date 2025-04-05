@@ -10,9 +10,9 @@ export default function ConsultationPage() {
     <ConsultationLayout>
       <Routes>
         <Route path="/" element={<ConsultationList />} />
-        <Route path="/book" element={<BookConsultation />} />
-        <Route path="/:consultationId" element={<ConsultationDetail />} />
-        <Route path="/meeting/:meetingId" element={<VirtualMeeting onEnd={() => console.log('Meeting ended')} />} />
+        <Route path="book" element={<BookConsultation />} />
+        <Route path=":consultationId" element={<ConsultationDetail />} />
+        <Route path="meeting/:meetingId" element={<VirtualMeeting onEnd={() => console.log('Meeting ended')} />} />
       </Routes>
     </ConsultationLayout>
   );

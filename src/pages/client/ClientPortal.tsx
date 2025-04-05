@@ -11,23 +11,16 @@ import { ClientInsights } from '../../components/client/Dashboard/ClientInsights
 export default function ClientPortal() { 
   return ( 
     <Routes>
-      <Route
-        path="/"
-        element={
-          <ClientLayout>
-            <Routes>
-              <Route path="/" element={<ClientDashboard />} />
-              <Route path="/documents" element={<Documents />} />
-              <Route path="/messages" element={<Messages />} />
-              <Route path="/appointments" element={<Calendar />} />
-              <Route path="/consultations" element={<ConsultationList />} />
-              <Route path="/finances" element={<ClientInsights />} />
-              <Route path="/tax-planning" element={<ClientInsights />} />
-              <Route path="/settings" element={<Settings />} />
-            </Routes>
-          </ClientLayout>
-        }
-      />
-  </Routes>
-  )
+      <Route path="/" element={<ClientLayout />}>
+        <Route index element={<ClientDashboard />} />
+        <Route path="documents" element={<Documents />} />
+        <Route path="messages" element={<Messages />} />
+        <Route path="appointments" element={<Calendar />} />
+        <Route path="consultations" element={<ConsultationList />} />
+        <Route path="finances" element={<ClientInsights />} />
+        <Route path="tax-planning" element={<ClientInsights />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
+    </Routes>
+  );
 }
