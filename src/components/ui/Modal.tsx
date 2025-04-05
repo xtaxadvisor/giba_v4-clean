@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { Button } from './Button';
+import { useEffect } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -10,6 +11,19 @@ interface ModalProps {
 
 export function Modal({ isOpen, onClose, title, children }: ModalProps) {
   if (!isOpen) return null;
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">

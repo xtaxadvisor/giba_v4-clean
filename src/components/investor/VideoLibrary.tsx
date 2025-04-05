@@ -89,8 +89,8 @@ export function VideoLibrary() {
   });
 
   const handleBuyNow = (videoId: string) => {
-    // Implement payment gateway integration
-    console.log('Purchasing video:', videoId);
+    // Simulate video purchase by redirecting to a confirmation page
+    window.location.href = `/purchase/confirmation?video=${videoId}`;
   };
 
   return (
