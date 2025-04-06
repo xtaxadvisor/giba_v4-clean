@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import { configDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import type { PageContextBuiltIn } from 'vite-plugin-ssr/types';
+
 
 export default defineConfig({
   plugins: [react()],
