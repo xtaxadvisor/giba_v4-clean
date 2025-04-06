@@ -1,15 +1,17 @@
 import { ArrowRight, Clock, Check } from 'lucide-react';
 import { Button } from '../ui/Button';
 
-interface ServiceCardProps {
-  id: string;
+export interface ServiceCardProps {
+  id?: string;
   title: string;
   description: string;
   price: string;
-  priceValue: number;
+  priceValue?: number;
   duration: string;
   features: string[];
-  user?: { id: string } | null;
+  user?: string;
+  popular?: boolean;
+  onBook?: () => void; // Added onBook prop
 }
 
 export function ServiceCard({

@@ -12,10 +12,7 @@ interface AuthContextType {
   }) => Promise<void>;
   logout: () => Promise<void>;
 }
-// Ensure this file contains the UserContext definition and export
-// Example:
-const UserContext = React.createContext<User | null>(null);
-export { UserContext };
+
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -29,7 +26,8 @@ const mockUsers: Record<string, User> = {
     displayName: 'Development Professional',
     avatarUrl: 'https://via.placeholder.com/40',
     createdAt: new Date().toISOString(),
-    location: 'Development'
+    location: 'Development',
+    lastActiveAt: new Date().toISOString()
   },
   student: {
     id: 'dev-student',
@@ -38,19 +36,56 @@ const mockUsers: Record<string, User> = {
     role: 'student',
     displayName: 'Development Student',
     avatarUrl: 'https://via.placeholder.com/40',
+    location: 'Development',
     createdAt: new Date().toISOString(),
-    location: 'Development'
+    lastActiveAt: new Date().toISOString()
   }
-};
+  }
+  export const UserContext = createContext<User | null>(null); // eslint-disable-line @typescript-eslint/no-unused-vars 
+  export const UserProvider = AuthProvider; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserConsumer = AuthContext.Consumer; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextProvider = AuthProvider; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextConsumer = AuthContext.Consumer; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValue = mockUsers; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMock = mockUsers; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockProfessional = mockUsers.professional; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockStudent = mockUsers.student; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockProfessionalId = mockUsers.professional.id; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockStudentId = mockUsers.student.id; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockProfessionalName = mockUsers.professional.name; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockStudentName = mockUsers.student.name; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockProfessionalEmail = mockUsers.professional.email; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockStudentEmail = mockUsers.student.email; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockProfessionalRole = mockUsers.professional.role; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockStudentRole = mockUsers.student.role; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockProfessionalDisplayName = mockUsers.professional.displayName; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockStudentDisplayName = mockUsers.student.displayName; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockProfessionalAvatarUrl = mockUsers.professional.avatarUrl; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockStudentAvatarUrl = mockUsers.student.avatarUrl; // eslint-disable-line @typescript-eslint/no-unused-vars   
+  export const UserContextValueMockProfessionalCreatedAt = mockUsers.professional.createdAt; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockStudentCreatedAt = mockUsers.student.createdAt; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockProfessionalLocation = mockUsers.professional.location; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockStudentLocation = mockUsers.student.location; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockProfessionalLastActiveAt = mockUsers.professional.lastActiveAt; // eslint-disable-line @typescript-eslint/no-unused-vars
+  export const UserContextValueMockStudentLastActiveAt = mockUsers.student.lastActiveAt; // eslint-disable-line @typescript-eslint/no-unused-vars
+   
+  
+; // TODO: Remove this mock data in production  
+
+const mockRole: keyof typeof mockUsers = 'professional'; // Change to 'student' if needed
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Return mock data for development
   const value = {
-    user: mockUsers.professional, // Default to professional user
+    user: mockUsers[mockRole],
     loading: false,
-    isAuthenticated: true, // Always authenticated in development
-    login: async () => {},
-    register: async () => {},
+    isAuthenticated: true,
+    login: async () => {
+      console.warn('Login is mocked');
+    },
+    register: async () => {
+      console.warn('Register is mocked');
+    },
     logout: async () => {
       window.location.href = '/';
     }
