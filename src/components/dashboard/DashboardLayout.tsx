@@ -20,6 +20,8 @@ const wrapIcon = (Icon: React.FC<LucideProps>): React.ComponentType<React.SVGPro
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../ui/Button';
 import type { MenuItem } from '../../types';
+import { ShoppingCart } from '@/components/cart/ShoppingCart';
+
 const menuItems: MenuItem[] = [
   { title: 'Dashboard', href: '/dashboard', icon: wrapIcon(Home) },
   { title: 'Virtual Consultations', href: '/dashboard/consultations', icon: wrapIcon(Video) },
@@ -119,6 +121,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
+      <ShoppingCart />
     </div>
   );
 }
