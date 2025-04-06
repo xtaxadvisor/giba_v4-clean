@@ -107,7 +107,9 @@ export class LoadTester {
     await Promise.all(promises);
 
     if (times.length > 0) {
-      results.averageConnectionTime = times.reduce((a, b) => a + b, 0) / times.length;
+      results.averageConnectionTime = Array.isArray(times)
+        ? times.reduce((a, b) => a + b, 0) / times.length
+        : 0;
     }
 
     return results;

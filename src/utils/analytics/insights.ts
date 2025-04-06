@@ -36,9 +36,9 @@ export function identifyAnomalies(
   threshold: number = 2
 ): number[] {
   const mean = data.reduce((a, b) => a + b, 0) / data.length;
-  const stdDev = Math.sqrt(
-    data.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / data.length
-  );
+  const stdDev = Array.isArray(data)
+    ? Math.sqrt(data.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / data.length)
+    : 0;
   
   return data.map((value, index) => 
     Math.abs(value - mean) > threshold * stdDev ? index : -1

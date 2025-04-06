@@ -34,7 +34,7 @@ export function predictTrend(history: Array<{ date: string; value: number }>): n
   const x = Array.from({ length: n }, (_, i) => i);
   const y = history.map(h => h.value);
   
-  const sumX = x.reduce((a, b) => a + b, 0);
+  const sumX = Array.isArray(x) ? x.reduce((a, b) => a + b, 0) : 0;
   const sumY = y.reduce((a, b) => a + b, 0);
   const sumXY = x.reduce((sum, xi, i) => sum + xi * y[i], 0);
   const sumXX = x.reduce((sum, xi) => sum + xi * xi, 0);

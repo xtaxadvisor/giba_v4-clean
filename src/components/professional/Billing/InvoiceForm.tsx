@@ -55,7 +55,9 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
   };
 
   const calculateTotal = () => {
-    return formData.items.reduce((sum, item) => sum + item.amount, 0);
+    return Array.isArray(formData.items)
+      ? formData.items.reduce((sum, item) => sum + item.amount, 0)
+      : 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {

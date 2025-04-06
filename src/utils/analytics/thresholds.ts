@@ -23,11 +23,14 @@ export function getThresholdColor(status: 'normal' | 'warning' | 'critical'): st
 export function calculateMetricStatus(
   metrics: PerformanceMetrics
 ): Record<string, 'normal' | 'warning' | 'critical'> {
-  return Object.entries(metrics).reduce((acc, [key, metric]) => {
-    const typedMetric = metric as { current: number; thresholds: MetricThreshold };
-    return {
-      ...acc,
-      [key]: checkThresholdViolation(typedMetric.current, typedMetric.thresholds)
-    };
-  }, {});
+  const entries = Object.entries(metrics);
+  return Array.isArray(entries)
+    ? entries.reduce((acc, [key, metric]) => {
+        const typedMetric = metric as { current: number; thresholds: MetricThreshold };
+        return {
+          ...acc,
+          [key]: checkThresholdViolation(typedMetric.current, typedMetric.thresholds)
+        };
+      }, {})
+    : {};
 }

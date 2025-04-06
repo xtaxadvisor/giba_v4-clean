@@ -7,7 +7,9 @@ export function formatPercentage(value: number): string {
 }
 
 export function calculateHealthScore(metrics: number[]): number {
-  return Math.round(metrics.reduce((sum, value) => sum + value, 0) / metrics.length);
+  return Array.isArray(metrics) && metrics.length > 0
+    ? Math.round(metrics.reduce((sum, value) => sum + value, 0) / metrics.length)
+    : 0;
 }
 export function formatCurrency(value: number): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);

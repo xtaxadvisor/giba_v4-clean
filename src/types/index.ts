@@ -74,9 +74,13 @@ export interface Consultation {
   type: ReactNode;
   data: any;
 }
-
+// Extending the User type
+interface ExtendedUser extends User {
+  lastActiveAt: Date;
+}
 // User type
 export interface User {
+  lastActiveAt: any;
   id: string;
   name: string;
   email: string;

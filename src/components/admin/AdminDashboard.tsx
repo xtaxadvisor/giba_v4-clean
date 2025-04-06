@@ -1,4 +1,4 @@
-import { Users, Settings, FileText, Shield } from 'lucide-react';
+import { Users, Settings, FileText, Shield, CreditCard } from 'lucide-react';
 import { Card } from '../ui/Card';
 
 export function AdminDashboard() {

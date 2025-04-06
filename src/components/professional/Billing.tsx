@@ -105,9 +105,11 @@ export function Billing() {
   const overdueAmount = filteredInvoices
     .filter(invoice => invoice.status === 'overdue')
     .reduce((sum, invoice) => sum + invoice.amount, 0);
-  const pendingAmount = filteredInvoices
-    .filter(invoice => invoice.status === 'pending')
-    .reduce((sum, invoice) => sum + invoice.amount, 0);
+  const pendingAmount = Array.isArray(filteredInvoices)
+    ? filteredInvoices
+        .filter(invoice => invoice.status === 'pending')
+        .reduce((sum, invoice) => sum + invoice.amount, 0)
+    : 0;
 
   return (
     <div className="space-y-6">

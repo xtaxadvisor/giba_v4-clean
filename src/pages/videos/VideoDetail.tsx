@@ -15,8 +15,25 @@ export default function VideoDetail() {
     return <div>Video not found</div>;
   }
 
-  const handlePurchase = () => {
-    addNotification('Video purchase feature coming soon!', 'info');
+  const handlePurchase = async () => {
+    try {
+      const response = await fetch('/.netlify/functions/purchase-course', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ courseId: video.id }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Purchase failed');
+      }
+
+      window.location.href = result.checkoutUrl;
+    } catch (error) {
+      console.error('Purchase error:', error);
+      addNotification('Purchase failed. Please try again.', 'error');
+    }
   };
 
   return (

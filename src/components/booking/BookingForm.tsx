@@ -12,7 +12,7 @@ interface BookingFormProps {
   onCancel: () => void;
 }
 
-export function BookingForm({ serviceType, onSubmit, onCancel }: BookingFormProps) {
+export function BookingForm({ serviceType, onSubmit, onCancel, course }: BookingFormProps & { course?: { id: string } }) {
   const { user } = useAuth();
   const { addNotification } = useNotificationStore();
   const [formData, setFormData] = useState({
@@ -23,9 +23,9 @@ export function BookingForm({ serviceType, onSubmit, onCancel }: BookingFormProp
     isVirtual: true
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const startTime = new Date(`${formData.date}T${formData.time}`);
     if (startTime < new Date()) {
       addNotification('Please select a future date and time', 'error');
@@ -34,13 +34,58 @@ export function BookingForm({ serviceType, onSubmit, onCancel }: BookingFormProp
 
     const endTime = new Date(startTime.getTime() + parseInt(formData.duration) * 60000);
 
-    onSubmit({
+    const payload = {
       ...formData,
       startTime: startTime.toISOString(),
       endTime: endTime.toISOString(),
       type: serviceType,
-      clientId: user?.id
-    });
+      clientId: user?.id || null
+    };
+
+    try {
+      const response = await fetch('/.netlify/functions/consultations', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        addNotification(result.error || 'Failed to book consultation', 'error');
+        return;
+      }
+
+      const redirectUrl = `/checkout?consultationId=${result.consultationId}`;
+      if (!user) {
+        window.location.href = `/signup?next=${encodeURIComponent(redirectUrl)}`;
+      } else {
+        window.location.href = redirectUrl;
+      }
+    } catch (error) {
+      console.error('Booking error:', error);
+      addNotification('Something went wrong. Please try again.', 'error');
+    }
+  };
+
+  const handlePurchase = async () => {
+    try {
+      const response = await fetch('/.netlify/functions/purchase-course', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ courseId: course?.id || '' }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Purchase failed');
+      }
+
+      window.location.href = result.checkoutUrl;
+    } catch (error) {
+      console.error('Purchase error:', error);
+      addNotification('Purchase failed. Please try again.', 'error');
+    }
   };
 
   return (

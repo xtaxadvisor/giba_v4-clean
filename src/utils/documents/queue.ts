@@ -18,11 +18,14 @@ function calculateAverageProcessingTime(documents: QueuedDocument[]): number {
   
   if (!completedDocs.length) return 0;
   
-  const totalTime = completedDocs.reduce((sum, doc) => {
-    const processTime = new Date(doc.completedAt!).getTime() - 
-                       new Date(doc.startedAt!).getTime();
-    return sum + processTime;
-  }, 0);
+  const totalTime = Array.isArray(completedDocs)
+    ? completedDocs.reduce((sum, doc) => {
+        const processTime =
+          new Date(doc.completedAt!).getTime() -
+          new Date(doc.startedAt!).getTime();
+        return sum + processTime;
+      }, 0)
+    : 0;
   
   return totalTime / completedDocs.length;
 }

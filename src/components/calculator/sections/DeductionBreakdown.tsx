@@ -19,7 +19,9 @@ interface DeductionBreakdownProps {
 }
 
 export function DeductionBreakdown({ deductions, selectedType }: DeductionBreakdownProps) {
-  const itemizedTotal = Object.values(deductions.itemized).reduce((a, b) => a + b, 0);
+  const itemizedTotal = Array.isArray(Object.values(deductions.itemized))
+    ? Object.values(deductions.itemized).reduce((a, b) => a + b, 0)
+    : 0;
 
   const data = {
     labels: ['Mortgage Interest', 'Student Loan Interest', 'Charitable Contributions', 'Other'],

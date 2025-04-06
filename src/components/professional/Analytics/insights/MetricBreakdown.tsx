@@ -11,7 +11,9 @@ interface MetricBreakdownProps {
 }
 
 export function MetricBreakdown({ data, title }: MetricBreakdownProps) {
-  const total = data.reduce((sum, item) => sum + item.value, 0);
+  const total = Array.isArray(data)
+    ? data.reduce((sum, item) => sum + item.value, 0)
+    : 0;
   
   const chartData = {
     labels: data.map(d => d.label),

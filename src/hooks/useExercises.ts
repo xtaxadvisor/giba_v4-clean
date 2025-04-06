@@ -23,7 +23,9 @@ export function useExercises() {
     }
   });
 
-  const totalPoints = exercises.reduce((sum, exercise) => sum + exercise.points, 0);
+  const totalPoints = Array.isArray(exercises)
+    ? exercises.reduce((sum, exercise) => sum + exercise.points, 0)
+    : 0;
 
   return {
     exercises,

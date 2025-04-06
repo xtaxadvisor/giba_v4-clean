@@ -18,7 +18,10 @@ export const validateAWSConfig = () => {
   ];
 
   const missing = required.filter(key => {
-    const value = key.split('.').reduce((obj, k) => (obj && k in obj ? (obj as any)[k] : undefined), AWS_CONFIG);
+    const path = key.split('.');
+    const value = Array.isArray(path)
+      ? path.reduce((obj, k) => (obj && k in obj ? (obj as any)[k] : undefined), AWS_CONFIG)
+      : undefined;
     return !value;
   });
 

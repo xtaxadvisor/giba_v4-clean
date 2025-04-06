@@ -31,12 +31,15 @@ export function sanitizeInput(input: string): string {
 
 // Object sanitization with type safety
 export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
-  const sanitized = Object.entries(obj).reduce((acc, [key, value]) => {
-    return {
-      ...acc,
-      [key]: typeof value === 'string' ? sanitizeInput(value) : value
-    };
-  }, {} as T);
+  const entries = Object.entries(obj);
+  const sanitized = Array.isArray(entries)
+    ? entries.reduce((acc, [key, value]) => {
+        return {
+          ...acc,
+          [key]: typeof value === 'string' ? sanitizeInput(value) : value
+        };
+      }, {} as T)
+    : {} as T;
   return sanitized;
 }
 

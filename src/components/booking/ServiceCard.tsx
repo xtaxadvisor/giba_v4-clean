@@ -2,34 +2,28 @@ import { ArrowRight, Clock, Check } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 interface ServiceCardProps {
+  id: string;
   title: string;
   description: string;
   price: string;
+  priceValue: number;
   duration: string;
   features: string[];
-  onBook: () => void;
-  popular?: boolean;
+  user?: { id: string } | null;
 }
 
 export function ServiceCard({
+  id,
   title,
   description,
   price,
+  priceValue,
   duration,
   features,
-  onBook,
-  popular
+  user,
 }: ServiceCardProps) {
   return (
-    <div className={`relative bg-white rounded-2xl shadow-xl transition-transform hover:scale-105 ${
-      popular ? 'border-2 border-blue-500' : ''
-    }`}>
-      {popular && (
-        <div className="absolute top-0 right-0 -translate-y-1/2 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">
-          Most Popular
-        </div>
-      )}
-      
+    <div className={`relative bg-white rounded-2xl shadow-xl transition-transform hover:scale-105`}>
       <div className="p-8">
         <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
         <p className="mt-2 text-gray-500">{description}</p>
@@ -58,7 +52,14 @@ export function ServiceCard({
           className="w-full mt-8"
           icon={ArrowRight}
           iconPosition="right"
-          onClick={onBook}
+          onClick={() => {
+            const redirectUrl = `/checkout?serviceId=${id}&price=${priceValue}`;
+            if (!user) {
+              window.location.href = `/signup?next=${encodeURIComponent(redirectUrl)}`;
+            } else {
+              window.location.href = redirectUrl;
+            }
+          }}
         >
           Book Now
         </Button>

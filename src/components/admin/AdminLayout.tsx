@@ -7,7 +7,8 @@ import {
   Database,
   Activity,
   Bell,
-  UserPlus
+  UserPlus,
+  ShoppingCart
 } from 'lucide-react';
 type MenuItem = {
   title: string;
@@ -29,7 +30,8 @@ const menuItems: MenuItem[] = [
   { title: 'User Management', href: '/admin/users', icon: UserPlus },
   { title: 'System Logs', href: '/admin/logs', icon: Activity },
   { title: 'Database', href: '/admin/database', icon: Database },
-  { title: 'Settings', href: '/admin/settings', icon: Settings }
+  { title: 'Settings', href: '/admin/settings', icon: Settings },
+  { title: 'Purchases', href: '/admin/purchases', icon: ShoppingCart }
 ];
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {

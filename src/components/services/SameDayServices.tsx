@@ -256,7 +256,12 @@ export function SameDayServices() {
                 <Button
                   variant="primary"
                   className="w-full"
-                  onClick={() => navigate('/contact')}
+                  onClick={() => {
+                    const query = `?serviceIndex=${index}`;
+                    const isAuthenticated = false; // Replace with actual user check
+                    const redirectUrl = `/checkout${query}`;
+                    navigate(isAuthenticated ? redirectUrl : `/signup?next=${encodeURIComponent(redirectUrl)}`);
+                  }}
                 >
                   Get Started
                 </Button>

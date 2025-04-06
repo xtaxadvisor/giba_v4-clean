@@ -75,6 +75,10 @@ export interface User {
   location: string;
   displayName: string;
 }
+// Extending the User type
+interface ExtendedUser extends User {
+  lastActiveAt: Date;
+}
 
 export interface AuthResponse {
   user: User;
