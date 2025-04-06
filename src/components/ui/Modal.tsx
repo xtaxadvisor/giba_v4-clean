@@ -1,6 +1,6 @@
 import { X } from 'lucide-react';
 import { Button } from './Button';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -10,7 +10,13 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children }: ModalProps) {
-  if (!isOpen) return null;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !isOpen) return null;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

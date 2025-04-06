@@ -7,5 +7,25 @@
     "allowSyntheticDefaultImports": true,
     "outDir": "dist"
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.mts"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.test.json"
+    }
+  ]
 }
+// Compare this snippet from tsconfig.test.json:
+// {
+//   "extends": "./tsconfig.app.json",
+//   "compilerOptions": {
+//     "outDir": "dist-test",
+//     "types": ["vitest/globals", "node"], // Added "node" here
+//     "typeRoots": ["node_modules/@types", "src/types"]
+//   },
+//   "include": ["src", "tests"],
+//   "exclude": ["node_modules", "dist", "dist-test"]
+// }

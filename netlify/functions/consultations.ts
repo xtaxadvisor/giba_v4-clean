@@ -13,18 +13,31 @@ export const handler = async (event) => {
       };
     }
 
-    const body = JSON.parse(event.body || '{}');
+    if (!event.body) {
+      return {
+        ...createErrorResponse(400, 'Request body is required'),
+        headers: corsHeaders,
+      };
+    }
+
+    let body;
+    try {
+      body = JSON.parse(event.body);
+    } catch {
+      return {
+        ...createErrorResponse(400, 'Invalid JSON in request body'),
+        headers: corsHeaders,
+      };
+    }
 
     console.log('Received consultation request:', body);
-
-    // You can forward this to a database, email, or CRM here
 
     return {
       ...createSuccessResponse({
         message: 'Consultation received successfully',
-        data: body
+        data: body,
       }),
-      headers: corsHeaders
+      headers: corsHeaders,
     };
   } catch (error) {
     console.error('Error in consultations function:', error);

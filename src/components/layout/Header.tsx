@@ -106,6 +106,26 @@ export function Header() {
                 </Button>
               </div>
             )}
+            <Link
+              to="/cart"
+              className="text-gray-600 hover:text-blue-600 transition-colors flex items-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 mr-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.2 6m1.2-6L5.4 7M17 13l1.2 6M6 19a1 1 0 100 2 1 1 0 000-2zm12 0a1 1 0 100 2 1 1 0 000-2z"
+                />
+              </svg>
+              Cart
+            </Link>
           </nav>
 
           <button

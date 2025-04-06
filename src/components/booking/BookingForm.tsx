@@ -75,9 +75,13 @@ export function BookingForm({ serviceType, onSubmit, onCancel, course }: Booking
         body: JSON.stringify({ courseId: course?.id || '' }),
       });
 
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+
       const result = await response.json();
 
-      if (!response.ok || !result.success) {
+      if (!result.success) {
         throw new Error(result.error || 'Purchase failed');
       }
 
