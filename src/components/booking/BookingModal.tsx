@@ -3,6 +3,7 @@ import { BookingForm } from './BookingForm';
 import { useConsultation } from '../../hooks/useConsultation';
 import { useNotificationStore } from '../../lib/store';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -11,6 +12,12 @@ interface BookingModalProps {
 }
 
 export function BookingModal({ isOpen, onClose, serviceType }: BookingModalProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) return null;
+
   const { scheduleConsultation } = useConsultation();
   const { addNotification } = useNotificationStore();
   const navigate = useNavigate();
