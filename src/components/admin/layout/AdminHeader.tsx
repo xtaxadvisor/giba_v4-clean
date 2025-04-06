@@ -19,6 +19,22 @@ export function AdminHeader({ user, onLogout }: AdminHeaderProps) {
             <button className="text-gray-500 hover:text-gray-700">
               <Bell className="h-6 w-6" />
             </button>
+            <button className="text-gray-500 hover:text-gray-700">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.2 6m1.2-6L5.4 7M17 13l1.2 6M6 19a1 1 0 100 2 1 1 0 000-2zm12 0a1 1 0 100 2 1 1 0 000-2z"
+                />
+              </svg>
+            </button>
             <div className="relative group">
               <button className="flex items-center space-x-3">
                 <div className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center">
