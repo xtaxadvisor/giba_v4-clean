@@ -7,7 +7,7 @@ import { AppRoutes } from './routes';
 import { Notifications } from './components/ui/Notifications';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { ConnectionStatus } from './components/testing/ConnectionStatus';
-import { ShoppingCart as Cart } from './components/cart/ShoppingCart'; // Adjusted path to match the correct location
+import Cart from './components/cart/ShoppingCart'; // Adjusted path to match the correct location
 
 <Routes>
   {/* other routes */}
