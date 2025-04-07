@@ -3,16 +3,33 @@ import { Calculator, Clock, Plus, Trash2 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
-import { calculateServicesCost, ServiceTypes, type ServiceRequest } from '../../utils/serviceCalculator';
+import calculateServicesCost from '../../utils/serviceCalculator';
+import { ServiceRequest, ServiceTypes } from '../../utils/serviceCalculator';
 import { formatCurrency } from '../../utils/format';
 import { useNotificationStore } from '../../lib/store';
+import { useTranslation } from 'react-i18next';
+interface CalculationResult {
+  total: number;
+  subtotal: number;
+  addons: number;
+  discount: number;
+  details: {
+    basePrice: number;
+    hourlyCharges: number;
+    appliedDiscount: {
+      percentage: number;
+    };
+  };
+}
+
+export type { CalculationResult }; // for IDE auto-completion and type checking 
 
 export function ServiceCalculator() {
   const [services, setServices] = useState<ServiceRequest[]>([{
     type: ServiceTypes.TAX_PLANNING,
     hours: 1
   }]);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<CalculationResult | null>(null);
   const { addNotification } = useNotificationStore();
 
   const handleAddService = () => {
