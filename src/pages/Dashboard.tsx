@@ -5,7 +5,8 @@ import { Documents } from '../components/dashboard/Documents';
 import { Calendar } from '../components/dashboard/Calendar';
 import { Settings } from '../components/dashboard/Settings';
 import { DashboardLayout } from '../components/dashboard/DashboardLayout';
-import { ConsultationList } from '../components/consultation/ConsultationList';
+import ConsultationList from '../components/consultation/ConsultationList';
+
 // Removed unused import for ConsultationPage
 
 export default function Dashboard() {

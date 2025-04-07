@@ -5,7 +5,7 @@ import { Documents } from '../../components/dashboard/Documents';
 import { Messages } from '../../components/dashboard/Messages';
 import { Calendar } from '../../components/dashboard/Calendar';
 import { Settings } from '../../components/dashboard/Settings';
-import { ConsultationList } from '../../components/consultation/ConsultationList';
+import ConsultationList from '../../components/consultation/ConsultationList';
 import { ClientInsights } from '../../components/client/Dashboard/ClientInsights';
 
 export default function ClientPortal() { 

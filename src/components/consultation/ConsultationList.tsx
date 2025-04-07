@@ -5,7 +5,7 @@ import { useConsultation } from '../../hooks/useConsultation';
 import { useNotificationStore } from '../../lib/store';
 import { Button } from '../ui/Button';
 import { BookingModal } from '../booking/BookingModal';
-
+// Removed duplicate export default function
 const LazyConsultationList = React.lazy(() => import('./ConsultationList'));
 export default function ConsultationList() {
   const [isBookingModalOpen, setIsBookingModalOpen] = React.useState(false);
