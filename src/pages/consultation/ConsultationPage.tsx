@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { ConsultationLayout } from '../../components/consultation/ConsultationLayout';
-import { ConsultationList } from '../../components/consultation/ConsultationList';
+import ConsultationList from '../../components/consultation/ConsultationList';
 import { ConsultationDetail } from '../../components/consultation/ConsultationDetail';
 import { BookConsultation } from '../../components/consultation/BookConsultation';
 import { VirtualMeeting } from '../../components/consultation/VirtualMeeting';
