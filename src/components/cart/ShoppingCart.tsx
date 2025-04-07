@@ -1,7 +1,6 @@
 import React from 'react';
 import { ShoppingCart as ShoppingCartIcon } from 'lucide-react';
 import { useMediaQuery } from '../../utils/hooks';
-const LazyCart = React.lazy(() => import('../../components/cart/ShoppingCart'));
 
 // Define the props for the Cart component
 interface CartProps {
@@ -61,4 +60,3 @@ export default function ShoppingCart() {
     </div>
   );
 }
-
