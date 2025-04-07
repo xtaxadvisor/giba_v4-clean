@@ -24,7 +24,7 @@ const CartIconComponent: React.FC = () => {
 
 export { CartIconComponent };
 
-
+// Removed duplicate ShoppingCart function
 export default function ShoppingCart() {
   const isMobile = useMediaQuery('(max-width: 768px)');
 
