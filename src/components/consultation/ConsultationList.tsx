@@ -6,10 +6,10 @@ import { useNotificationStore } from '../../lib/store';
 import { Button } from '../ui/Button';
 import { BookingModal } from '../booking/BookingModal';
 
-export function ConsultationList() {
+const LazyConsultationList = React.lazy(() => import('./ConsultationList'));
+export default function ConsultationList() {
   const [isBookingModalOpen, setIsBookingModalOpen] = React.useState(false);
   const { addNotification } = useNotificationStore();
-
   const handleCancel = async (consultationId: string) => { // eslint-disable-line @typescript-eslint/no-unused-vars
     try {
       // Implement cancellation logic
