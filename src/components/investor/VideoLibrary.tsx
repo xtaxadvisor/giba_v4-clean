@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Search, Filter, Play, Clock, DollarSign, Tag } from 'lucide-react';
 import { Button } from '../ui/Button';
 
@@ -73,6 +73,7 @@ const sampleVideos: VideoClass[] = [
 ];
 
 export function VideoLibrary() {
+  const VideoLibrary = React.lazy(() => import('../../pages/videos/VideoLibrary'));
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const categories = ['all', 'Tax Planning', 'Investment', 'Business'];

@@ -12,12 +12,6 @@ interface BookingModalProps {
 }
 
 export function BookingModal({ isOpen, onClose, serviceType }: BookingModalProps) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) return null;
-
   const { scheduleConsultation } = useConsultation();
   const { addNotification } = useNotificationStore();
   const navigate = useNavigate();
@@ -32,6 +26,8 @@ export function BookingModal({ isOpen, onClose, serviceType }: BookingModalProps
       addNotification('Failed to schedule consultation', 'error');
     }
   };
+
+  if (!isOpen) return null;
 
   return (
     <Modal

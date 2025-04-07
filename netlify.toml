@@ -20,6 +20,7 @@
   framework = "#custom"
 
 [functions]
+  directory = "netlify/functions"
   node_bundler = "esbuild"
   external_node_modules = ["@aws-sdk/client-ses", "openai", "jose"]
 

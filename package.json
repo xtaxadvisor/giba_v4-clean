@@ -41,6 +41,7 @@
     "@tanstack/react-query": "5.17.19",
     "@tanstack/react-query-devtools": "5.17.19",
     "@types/dompurify": "^3.0.5",
+    "aws-sdk": "^2.1692.0",
     "axios": "^1.8.4",
     "chart.js": "4.4.1",
     "date-fns": "3.3.1",
@@ -57,7 +58,7 @@
     "react-i18next": "^15.4.1",
     "react-router-dom": "6.21.3",
     "socket.io-client": "^4.7.4",
-    "vite-plugin-ssr": "^0.4.85",
+    "vite-plugin-ssr": "^0.4.142",
     "zod": "3.22.4",
     "zustand": "4.5.0"
   },

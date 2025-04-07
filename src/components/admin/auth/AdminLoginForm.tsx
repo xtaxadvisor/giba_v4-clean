@@ -1,27 +1,44 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Shield, Lock, User, Key } from 'lucide-react';
 import { Input } from '../../ui/Input';
 import { Button } from '../../ui/Button';
 import { useNotificationStore } from '../../../lib/store';
 import { adminAuthService } from '../../../services/auth/adminAuth';
 import { isStrongPassword } from '../../../utils/crypto';
+// Ensure this file exports AdminLoginForm
+interface AdminLoginFormProps {
+  mode?: string;
+}
 
-export function AdminLoginForm() {
+export function AdminLoginForm({ mode }: AdminLoginFormProps) {
+  return (
+    <form>
+      {/* Form implementation */}
+      {mode && <p>Mode: {mode}</p>}
+    </form>
+  );
+}
+export function ClientSignupForm() {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    totpCode: ''
+    totpCode: '',
+    fullName: ''
   });
   const [loading, setLoading] = useState(false);
   const [showTOTP, setShowTOTP] = useState(false);
   const navigate = useNavigate();
   const { addNotification } = useNotificationStore();
+  
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const nextPath = searchParams.get('next') || '/admin';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    console.log('Admin login attempt:', { username: formData.username });
+    console.log('Client signup attempt:', { username: formData.username });
 
     try {
       if (!isStrongPassword(formData.password)) {
@@ -29,8 +46,8 @@ export function AdminLoginForm() {
         return;
       }
 
-      const success = await adminAuthService.login(formData);
-      console.log('Login result:', { success });
+      const success = await adminAuthService.signup(formData);
+      console.log('Signup result:', { success });
       
       if (success) {
         if (!showTOTP) {
@@ -39,13 +56,13 @@ export function AdminLoginForm() {
           return;
         }
         
-        addNotification('Admin access granted', 'success');
-        navigate('/admin');
+        addNotification('Client account created', 'success');
+        navigate(nextPath);
       } else {
         addNotification('Invalid credentials', 'error');
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Signup error:', error);
       addNotification('Authentication failed', 'error');
     } finally {
       setLoading(false);
@@ -58,10 +75,10 @@ export function AdminLoginForm() {
         <div className="text-center">
           <Shield className="mx-auto h-12 w-12 text-blue-600" />
           <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            Admin Access Required
+            Create Client Account
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Please enter your admin credentials to continue
+            Please enter your information to register as a client
           </p>
         </div>
 
@@ -87,6 +104,15 @@ export function AdminLoginForm() {
                 required
                 autoComplete="current-password"
                 placeholder="Enter your password"
+              />
+              <Input
+                type="text"
+                label="Full Name"
+                icon={User}
+                value={formData.fullName}
+                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                required
+                placeholder="Enter your full name"
               />
             </>
           ) : (

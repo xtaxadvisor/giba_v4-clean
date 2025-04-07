@@ -1,3 +1,9 @@
+import AWS from 'aws-sdk';
+
+const ses = new AWS.SES({
+  region: 'us-east-1', // Change if using a different SES region
+});
+
 export const handler = async (event) => {
   try {
     if (event.httpMethod !== 'POST') {
@@ -17,6 +23,25 @@ export const handler = async (event) => {
     }
 
     console.log('Contact form submitted:', data);
+
+    const params = {
+      Source: 'services@protaxadvisors.tax',
+      Destination: {
+        ToAddresses: ['gdoffice@mail.com'],
+      },
+      Message: {
+        Subject: {
+          Data: `New contact form submission from ${data.name}`,
+        },
+        Body: {
+          Text: {
+            Data: `Name: ${data.name}\nEmail: ${data.email}\nMessage: ${data.message}`,
+          },
+        },
+      },
+    };
+
+    await ses.sendEmail(params).promise();
 
     return {
       statusCode: 200,

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { VideoCard } from '../../components/video/VideoCard';
 import { VideoFilters } from '../../components/video/VideoFilters';
 import { videoClasses } from '../../data/videoData';
@@ -10,7 +10,7 @@ export default function VideoLibrary() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const navigate = useNavigate();
-
+  const VideoLibrary = React.lazy(() => import('../../pages/videos/VideoLibrary'));
   const filteredVideos = videoClasses.filter(video => {
     const matchesSearch = 
       video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||

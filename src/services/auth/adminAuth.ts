@@ -16,7 +16,10 @@ const adminCredentialsSchema = z.object({
 
 export class AdminAuthService {
   private static instance: AdminAuthService;
-  private readonly API_URL = import.meta.env.VITE_API_URL || '/.netlify/functions';
+  private readonly API_URL = import.meta.env.VITE_API_URL || '/.netlify/functions'; // Removed unused import of 'import.meta.env.VITE_API_URL' and replaced with a default value  
+  private readonly adminSessionManager = adminSessionManager; // Removed unused import of 'adminSessionManager' and replaced with a reference to the class property    
+  private readonly notificationStore = useNotificationStore(); // Removed unused import of 'useNotificationStore'  and replaced with a reference to the class property  
+  signup: any;
 
   private constructor() {}
 

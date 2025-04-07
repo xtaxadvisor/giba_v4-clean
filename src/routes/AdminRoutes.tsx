@@ -10,6 +10,7 @@ import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 export function AdminRoutes() {
   return (
     <Routes>
+      <Route path="/signup" element={<AdminLoginForm mode="signup" />} />
       <Route path="/login" element={<AdminLoginForm />} />
       
       <Route

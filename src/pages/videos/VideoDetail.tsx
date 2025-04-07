@@ -23,13 +23,24 @@ export default function VideoDetail() {
         body: JSON.stringify({ courseId: video.id }),
       });
 
-      const result = await response.json();
+      type PurchaseResponse = {
+        success: boolean;
+        checkoutUrl?: string;
+        error?: string;
+      };
 
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Purchase failed');
+      let result: PurchaseResponse = { success: false };
+      try {
+        result = await response.json();
+      } catch (err) {
+        console.error('Failed to parse JSON:', err);
       }
 
-      window.location.href = result.checkoutUrl;
+      if (!response.ok || !result.success) {
+        throw new Error(result?.error || 'Purchase failed');
+      }
+
+      window.location.href = result.checkoutUrl!;
     } catch (error) {
       console.error('Purchase error:', error);
       addNotification('Purchase failed. Please try again.', 'error');
