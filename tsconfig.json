@@ -3,20 +3,22 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "declaration": false,
-    "emitDeclarationOnly": false,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+  "moduleResolution": "node",
+  "esModuleInterop": true,
+  "resolveJsonModule": true,
+  "strict": true,
+  "skipLibCheck": true,
+  "forceConsistentCasingInFileNames": true,
+  "outDir": "./dist",
+  "declaration": false,
+  "emitDeclarationOnly": false,
+  "jsx": "react-jsx",
+  "baseUrl": ".",
+  "paths": {
+    "@/*": ["src/*"]
   },
+  }
+  ,
   "include": ["src", "src/types"],
   "exclude": ["node_modules", "dist", "dist/types"]
 }

@@ -58,7 +58,8 @@
     "react-i18next": "^15.4.1",
     "react-router-dom": "6.21.3",
     "socket.io-client": "^4.7.4",
-    "vite-plugin-ssr": "^0.4.142",
+    "some-library": "^1.0.0",
+    "vite-plugin-ssr": "^0.4.85",
     "zod": "3.22.4",
     "zustand": "4.5.0"
   },
@@ -75,7 +76,7 @@
     "autoprefixer": "10.4.17",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
-    "netlify-cli": "^19.1.5",
+    "netlify-cli": "^16.4.2",
     "postcss": "8.4.33",
     "rollup-plugin-visualizer": "^5.14.0",
     "supabase": "^2.12.1",
