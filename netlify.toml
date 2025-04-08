@@ -39,3 +39,13 @@
     Strict-Transport-Security = "max-age=31536000; includeSubDomains"
     Cross-Origin-Embedder-Policy = "require-corp"
     Cross-Origin-Opener-Policy = "same-origin"
+
+[[build.plugins]]
+  package = "@netlify/plugin-functions-install-pnpm"
+
+[build]
+  functions = "/opt/build/repo/netlify/functions"
+  node_bundler = "esbuild"
+
+  [[build.functions]]
+    external_node_modules = ["aws-sdk"]
