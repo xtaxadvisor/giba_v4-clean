@@ -45,7 +45,12 @@ export function ConsultationDetail() {
               variant="primary"
               icon={Video}
               className="w-full"
-              disabled={consultation.status !== 'scheduled'}
+              disabled={consultation.status !== 'scheduled' || !consultation.videoCallUrl}
+              onClick={() => {
+                if (consultation.videoCallUrl) {
+                  window.open(consultation.videoCallUrl, '_blank');
+                }
+              }}
             >
               Join Video Call
             </Button>

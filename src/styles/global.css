@@ -1,4 +1,3 @@
-/* Load custom font from public/fonts directory */
 @font-face {
   font-family: 'ArialUnicode';
   src: url('/fonts/custom-font.woff2') format('woff2');
@@ -9,4 +8,8 @@
 
 body {
   font-family: 'ArialUnicode', sans-serif;
+}
+/* Hide TanStack Devtools in dev */
+.go3489369143 {
+  display: none !important;
 }

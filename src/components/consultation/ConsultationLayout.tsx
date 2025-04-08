@@ -1,4 +1,4 @@
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link, useLocation, Outlet } from 'react-router-dom';
 import { Calendar, Clock, Video, MessageSquare, Settings, ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/Button';
 
@@ -62,7 +62,7 @@ export function ConsultationLayout({ children }: ConsultationLayoutProps) {
         </aside>
 
         <main className="flex-1 ml-64 p-8">
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>

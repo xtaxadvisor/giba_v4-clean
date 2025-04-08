@@ -23,27 +23,21 @@ export default function VideoDetail() {
         body: JSON.stringify({ courseId: video.id }),
       });
 
-      type PurchaseResponse = {
+      if (!response.ok) {
+        throw new Error('Server responded with an error.');
+      }
+
+      const result: {
         success: boolean;
         checkoutUrl?: string;
         error?: string;
-      };
+      } = await response.json();
 
-      let result: PurchaseResponse = { success: false };
-      try {
-        result = await response.json();
-        if (!result.checkoutUrl) throw new Error('Missing checkout URL');
-      } catch (err) {
-        console.error('Failed to parse JSON:', err);
-        addNotification('Unexpected server response. Please try again.', 'error');
-        return;
+      if (!result.success || !result.checkoutUrl) {
+        throw new Error(result?.error || 'Missing or invalid checkout URL');
       }
 
-      if (!response.ok || !result.success) {
-        throw new Error(result?.error || 'Purchase failed');
-      }
-
-      window.location.href = result.checkoutUrl!;
+      window.location.href = result.checkoutUrl;
     } catch (error) {
       console.error('Purchase error:', error);
       addNotification('Purchase failed. Please try again.', 'error');

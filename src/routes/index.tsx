@@ -47,7 +47,7 @@ export function AppRoutes() {
           <SameDayServices />
         </Suspense>
       } />
-      <Route path="/consultation" element={
+      <Route path="/consultation/*" element={
         <Suspense fallback={<LoadingSpinner />}>
           <ConsultationPage />
         </Suspense>

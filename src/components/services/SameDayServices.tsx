@@ -29,6 +29,11 @@ interface Service {
 export function SameDayServices() {
   const navigate = useNavigate();
 
+  function isAuthenticated() {
+    // TODO: Replace this with real auth check logic
+    return false;
+  }
+
   const services: Service[] = [
     {
       title: 'Good Standing Certificates',
@@ -258,9 +263,9 @@ export function SameDayServices() {
                   className="w-full"
                   onClick={() => {
                     const query = `?serviceIndex=${index}`;
-                    const isAuthenticated = false; // Replace with actual user check
                     const redirectUrl = `/checkout${query}`;
-                    navigate(isAuthenticated ? redirectUrl : `/signup?next=${encodeURIComponent(redirectUrl)}`);
+                    const authenticated = isAuthenticated(); // Replace with real auth check
+                    navigate(authenticated ? redirectUrl : `/signup?next=${encodeURIComponent(redirectUrl)}`);
                   }}
                 >
                   Get Started

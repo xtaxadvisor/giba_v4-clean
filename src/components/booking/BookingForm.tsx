@@ -22,27 +22,28 @@ export function BookingForm({ serviceType, onSubmit, onCancel, course }: Booking
     notes: '',
     isVirtual: true
   });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const startTime = new Date(`${formData.date}T${formData.time}`);
-    if (startTime < new Date()) {
-      addNotification('Please select a future date and time', 'error');
-      return;
-    }
-
-    const endTime = new Date(startTime.getTime() + parseInt(formData.duration) * 60000);
-
-    const payload = {
-      ...formData,
-      startTime: startTime.toISOString(),
-      endTime: endTime.toISOString(),
-      type: serviceType,
-      clientId: user?.id || null
-    };
-
+    setLoading(true);
     try {
+      const startTime = new Date(`${formData.date}T${formData.time}`);
+      if (startTime < new Date()) {
+        addNotification('Please select a future date and time', 'error');
+        setLoading(false);
+        return;
+      }
+
+      const endTime = new Date(startTime.getTime() + parseInt(formData.duration) * 60000);
+      const payload = {
+        ...formData,
+        startTime: startTime.toISOString(),
+        endTime: endTime.toISOString(),
+        type: serviceType,
+        clientId: user?.id || null
+      };
+
       const response = await fetch('/.netlify/functions/consultations', {
         method: 'POST',
         body: JSON.stringify(payload),
@@ -52,22 +53,27 @@ export function BookingForm({ serviceType, onSubmit, onCancel, course }: Booking
 
       if (!response.ok) {
         addNotification(result.error || 'Failed to book consultation', 'error');
+        setLoading(false);
         return;
       }
 
       const redirectUrl = `/checkout?consultationId=${result.consultationId}`;
-      if (!user) {
-        window.location.href = `/signup?next=${encodeURIComponent(redirectUrl)}`;
-      } else {
+      if (user) {
         window.location.href = redirectUrl;
+      } else {
+        const nextUrl = encodeURIComponent(redirectUrl);
+        window.location.href = `/signup?next=${nextUrl}`;
       }
     } catch (error) {
       console.error('Booking error:', error);
       addNotification('Something went wrong. Please try again.', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handlePurchase = async () => {
+    setLoading(true);
     try {
       const response = await fetch('/.netlify/functions/purchase-course', {
         method: 'POST',
@@ -75,20 +81,15 @@ export function BookingForm({ serviceType, onSubmit, onCancel, course }: Booking
         body: JSON.stringify({ courseId: course?.id || '' }),
       });
 
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`Server error: ${response.status}`);
       const result = await response.json();
-
-      if (!result.success) {
-        throw new Error(result.error || 'Purchase failed');
-      }
-
+      if (!result.success) throw new Error(result.error || 'Purchase failed');
       window.location.href = result.checkoutUrl;
     } catch (error) {
       console.error('Purchase error:', error);
       addNotification('Purchase failed. Please try again.', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -178,12 +179,18 @@ export function BookingForm({ serviceType, onSubmit, onCancel, course }: Booking
       />
 
       <div className="flex justify-end space-x-3">
-        <Button type="button" variant="outline" onClick={onCancel}>
+        <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
           Cancel
         </Button>
-        <Button type="submit" variant="primary">
-          Confirm Booking
-        </Button>
+        {course ? (
+          <Button type="button" variant="primary" onClick={handlePurchase} disabled={loading}>
+            {loading ? 'Processing...' : 'Purchase Course'}
+          </Button>
+        ) : (
+          <Button type="submit" variant="primary" disabled={loading}>
+            {loading ? 'Booking...' : 'Confirm Booking'}
+          </Button>
+        )}
       </div>
     </form>
   );

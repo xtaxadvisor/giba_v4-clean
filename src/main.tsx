@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import './styles/global.css';
 import { createRoot } from 'react-dom/client';
 import * as Sentry from "@sentry/react";
@@ -10,7 +10,6 @@ import { AppRoutes } from './routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; // Import QueryClient and QueryClientProvider
 import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './styles/global.css';
 
 
@@ -35,6 +34,17 @@ function AppInitializer() {
   return null;
 }
 
+const ReactQueryDevtools = import.meta.env.DEV
+  ? lazy(() => import('@tanstack/react-query-devtools').then(mod => ({ default: mod.ReactQueryDevtools })))
+  : () => null;
+
+const Devtools = () =>
+  import.meta.env.DEV ? (
+    <Suspense fallback={null}>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </Suspense>
+  ) : null;
+
 root.render(
   <React.StrictMode>
     <Sentry.ErrorBoundary fallback={
@@ -54,7 +64,7 @@ root.render(
             </AuthProvider>
           </SupabaseProvider>
         </BrowserRouter>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <Devtools />
       </QueryClientProvider>
     </Sentry.ErrorBoundary>
   </React.StrictMode>

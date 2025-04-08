@@ -117,11 +117,13 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </nav>
         </aside>
 
-        <main className="flex-1 ml-64 p-8">
-          {children}
-        </main>
+        <div className="flex-1 ml-64 relative">
+          <main className="p-8">
+            {children}
+          </main>
+          <ShoppingCart />
+        </div>
       </div>
-      <ShoppingCart />
     </div>
   );
 }

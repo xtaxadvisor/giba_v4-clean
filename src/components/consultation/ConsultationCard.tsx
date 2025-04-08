@@ -21,7 +21,9 @@ export function ConsultationCard({
     Math.abs(new Date(consultation.startTime).getTime() - new Date().getTime()) <= 5 * 60 * 1000; // 5 minutes before
 
   const handleJoinMeeting = () => {
-    navigate(`/consultation/${consultation.id}`);
+    if (consultation.meetingLink) {
+      window.open(consultation.meetingLink, '_blank');
+    }
   };
 
   const getStatusColor = (status: Consultation['status']) => {

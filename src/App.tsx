@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import '../styles/global.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SupabaseProvider } from './contexts/SupabaseProvider';
@@ -7,14 +7,15 @@ import { AppRoutes } from './routes';
 import { Notifications } from './components/ui/Notifications';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { ConnectionStatus } from './components/testing/ConnectionStatus';
-import Cart from './components/cart/ShoppingCart'; // Adjusted path to match the correct location
 
-<Routes>
-  {/* other routes */}
-  <Route path="/cart" element={<Cart />} />
-</Routes>
-// Removed unused Header import to resolve the error
-// import { Footer } from './components/Footer'; // Adjusted the path to match the correct location
+// Create a Devtools component to conditionally load React Query Devtools in development mode
+const Devtools = () => {
+  if (import.meta.env.DEV) {
+    const { ReactQueryDevtools } = require('@tanstack/react-query-devtools');
+    return <ReactQueryDevtools initialIsOpen={false} />;
+  }
+  return null;
+};
 
 // Create a client
 const queryClient = new QueryClient({
@@ -26,7 +27,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-// Removed unused AppLayout function to resolve the error
 
 function App() {
   return (
@@ -39,6 +39,7 @@ function App() {
                 <ConnectionStatus />
                 <AppRoutes />
                 <Notifications />
+                <Devtools />
               </div>
             </AuthProvider>
           </SupabaseProvider>

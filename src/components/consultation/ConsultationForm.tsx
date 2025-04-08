@@ -20,12 +20,17 @@ export function ConsultationForm({ onSubmit, onCancel, professionals }: Consulta
     type: 'tax-planning',
     notes: ''
   });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const startTime = new Date(`${formData.date}T${formData.time}`);
+    if (startTime < new Date()) {
+      alert('Please select a future date and time.');
+      return;
+    }
     const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); // 1 hour duration
-
+    setLoading(true);
     onSubmit({
       clientId: user?.id,
       professionalId: formData.professionalId,
@@ -34,6 +39,7 @@ export function ConsultationForm({ onSubmit, onCancel, professionals }: Consulta
       type: formData.type,
       notes: formData.notes
     });
+    setLoading(false);
   };
 
   return (
@@ -106,8 +112,8 @@ export function ConsultationForm({ onSubmit, onCancel, professionals }: Consulta
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit" variant="primary">
-          Schedule Consultation
+        <Button type="submit" variant="primary" disabled={loading}>
+          {loading ? 'Scheduling...' : 'Schedule Consultation'}
         </Button>
       </div>
     </form>

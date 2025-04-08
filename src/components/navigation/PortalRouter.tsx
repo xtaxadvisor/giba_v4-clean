@@ -11,11 +11,8 @@ const InvestorPortal = React.lazy(() => import('../../pages/investor/InvestorPor
 const StudentPortal = React.lazy(() => import('../../pages/student/StudentPortal'));
 const MessagingPortal = React.lazy(() => import('../../pages/messaging/MessagingPortal'));
 const Cart = React.lazy(() => import('../../components/cart/ShoppingCart'));
-const ShoppingCart = () => import('../../components/cart/ShoppingCart'); // Verify the file exists at this path or update the path
+const CheckoutPage = React.lazy(() => import('../../components/cart/ShoppingCart'));
 
-
-export default ShoppingCart;
-// Verify the file exists at this path or update the path
 export function PortalRouter() {
   return (
     <Routes>
@@ -90,6 +87,15 @@ export function PortalRouter() {
         element={
           <React.Suspense fallback={<LoadingSpinner />}>
             <Cart />
+          </React.Suspense>
+        }
+      />
+
+      <Route
+        path="/checkout"
+        element={
+          <React.Suspense fallback={<LoadingSpinner />}>
+            <CheckoutPage />
           </React.Suspense>
         }
       />

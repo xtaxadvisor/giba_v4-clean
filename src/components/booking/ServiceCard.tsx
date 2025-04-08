@@ -55,11 +55,15 @@ export function ServiceCard({
           icon={ArrowRight}
           iconPosition="right"
           onClick={() => {
-            const redirectUrl = `/checkout?serviceId=${id}&price=${priceValue}`;
-            if (!user) {
-              window.location.href = `/signup?next=${encodeURIComponent(redirectUrl)}`;
+            if (id && priceValue !== undefined) {
+              const redirectUrl = `/checkout?serviceId=${id}&price=${priceValue}`;
+              if (!user) {
+                window.location.href = `/auth/signup?next=${encodeURIComponent(redirectUrl)}`;
+              } else {
+                window.location.href = redirectUrl;
+              }
             } else {
-              window.location.href = redirectUrl;
+              console.error('Missing service ID or price value');
             }
           }}
         >
