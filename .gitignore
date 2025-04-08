@@ -37,3 +37,6 @@ src/config/twilio.ts
 
 # Netlify
 .netlify.env
+
+# Local Netlify folder
+.netlify
