@@ -1,5 +1,6 @@
 import { ServiceCategory } from '../../components/services/ServiceCategory';
 import { WhyChooseUs } from '../../components/services/WhyChooseUs';
+import { ServiceCalculator } from '../../components/services/ServiceCalculator';
 import { 
   Building2, 
   Calculator,
@@ -125,6 +126,9 @@ export default function ServiceCatalog() {
           ))}
         </div>
 
+        <div className="mt-20">
+          <ServiceCalculator />
+        </div>
         <WhyChooseUs />
       </div>
     </div>

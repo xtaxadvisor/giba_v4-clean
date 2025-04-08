@@ -1,10 +1,1 @@
-[functions]
-  node_bundler = "esbuild"
-
-[functions."*"]
-  external_node_modules = [
-    "@aws-sdk/client-ses",
-    "openai",
-    "jose",
-    "aws-sdk"
-  ]
+import ServiceCalculator from './ServiceCalculator';
