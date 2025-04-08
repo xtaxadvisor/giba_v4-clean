@@ -32,8 +32,11 @@ export default function VideoDetail() {
       let result: PurchaseResponse = { success: false };
       try {
         result = await response.json();
+        if (!result.checkoutUrl) throw new Error('Missing checkout URL');
       } catch (err) {
         console.error('Failed to parse JSON:', err);
+        addNotification('Unexpected server response. Please try again.', 'error');
+        return;
       }
 
       if (!response.ok || !result.success) {

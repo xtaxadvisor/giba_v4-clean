@@ -3,16 +3,25 @@ export const handler = async (event: any) => {
     if (event.httpMethod !== 'POST') {
       return {
         statusCode: 405,
-        body: JSON.stringify({ error: 'Method Not Allowed' }),
+        body: JSON.stringify({ success: false, error: 'Method Not Allowed' }),
       };
     }
 
-    const { courseId } = JSON.parse(event.body || '{}');
+    let courseId;
+    try {
+      const parsed = JSON.parse(event.body || '{}');
+      courseId = parsed.courseId;
+    } catch {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ success: false, error: 'Invalid JSON in request body' }),
+      };
+    }
 
     if (!courseId) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Missing courseId' }),
+        body: JSON.stringify({ success: false, error: 'Missing courseId' }),
       };
     }
 
@@ -30,7 +39,7 @@ export const handler = async (event: any) => {
     console.error('Authorize.Net purchase error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to initiate purchase' }),
+      body: JSON.stringify({ success: false, error: 'Failed to initiate purchase' }),
     };
   }
 };
