@@ -22,7 +22,7 @@ export const handler = async (event) => {
       };
     }
 
-    console.log('Contact form submitted:', data);
+    console.log('📨 Contact form submitted:', data);
 
     const params = {
       Source: 'services@protaxadvisors.tax',

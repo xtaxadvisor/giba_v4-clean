@@ -49,10 +49,24 @@ export function BookingForm({ serviceType, onSubmit, onCancel, course }: Booking
         body: JSON.stringify(payload),
       });
 
-      const result = await response.json();
+      const text = await response.text();
+      interface BookingResponse {
+        consultationId: string;
+      }
+
+      let result: BookingResponse = {} as BookingResponse;
+
+      try {
+        result = text ? JSON.parse(text) : {};
+      } catch (err) {
+        console.error('Invalid JSON response:', err, 'Raw response:', text);
+        addNotification('Unexpected server response. Please try again later.', 'error');
+        setLoading(false);
+        return;
+      }
 
       if (!response.ok) {
-        addNotification(result.error || 'Failed to book consultation', 'error');
+        addNotification((result as { error?: string }).error || 'Failed to book consultation', 'error');
         setLoading(false);
         return;
       }

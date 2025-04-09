@@ -12,6 +12,8 @@ const StudentPortal = React.lazy(() => import('../../pages/student/StudentPortal
 const MessagingPortal = React.lazy(() => import('../../pages/messaging/MessagingPortal'));
 const Cart = React.lazy(() => import('../../components/cart/ShoppingCart'));
 const CheckoutPage = React.lazy(() => import('../../components/cart/ShoppingCart'));
+const SchedulePage = React.lazy(() => import('../../pages/consultation/SchedulePage'));
+const MyConsultationsPage = React.lazy(() => import('../../pages/consultation/ConsultationPage'));
 
 export function PortalRouter() {
   return (
@@ -36,7 +38,24 @@ export function PortalRouter() {
             </ProtectedRoute>
           </React.Suspense>
         }
-      />
+      >
+        <Route
+          path="schedule"
+          element={
+            <React.Suspense fallback={<LoadingSpinner />}>
+              <SchedulePage />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="my-consultations"
+          element={
+            <React.Suspense fallback={<LoadingSpinner />}>
+              <MyConsultationsPage />
+            </React.Suspense>
+          }
+        />
+      </Route>
       
       <Route
         path="/professional/*"

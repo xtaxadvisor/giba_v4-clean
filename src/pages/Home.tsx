@@ -6,6 +6,7 @@ import { TrustIndicators } from '../components/home/TrustIndicators';
 import { Testimonials } from '../components/home/Testimonials';
 import { Subscriptions } from '../components/home/Subscriptions';
 import { AboutUs } from '../components/home/AboutUs';
+// Contact form section for user inquiries
 import { Contact } from '../components/home/Contact';
 import { Header } from '../components/layout/Header';
 import { AIAssistantWidget } from '../components/ai/AIAssistantWidget';

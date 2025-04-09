@@ -116,7 +116,7 @@ export default function SameDayServices() {
 
   const handleGetStarted = (service: Service) => {
     try {
-      // Navigate to contact form with service details
+      // Redirect user to the contact form and pre-fill service info
       navigate('/contact', { 
         state: { 
           service: service.title,
@@ -128,6 +128,10 @@ export default function SameDayServices() {
       console.error('Navigation error:', error);
       addNotification(
         'Unable to process request. Please try again.',
+        'error'
+      );
+      addNotification(
+        'Failed to navigate to the contact form. Please check your connection.',
         'error'
       );
     }

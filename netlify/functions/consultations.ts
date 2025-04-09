@@ -32,13 +32,13 @@ export const handler = async (event) => {
 
     console.log('Received consultation request:', body);
 
-    return {
-      ...createSuccessResponse({
-        message: 'Consultation received successfully',
-        data: body,
-      }),
-      headers: corsHeaders,
-    };
+    return new Response(JSON.stringify({ consultationId: 'abc123' }), {
+      status: 200,
+      headers: {
+        ...corsHeaders,
+        'Content-Type': 'application/json',
+      },
+    });
   } catch (error) {
     console.error('Error in consultations function:', error);
     return {

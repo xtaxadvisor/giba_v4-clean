@@ -7,6 +7,7 @@ import { AppRoutes } from './routes';
 import { Notifications } from './components/ui/Notifications';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { ConnectionStatus } from './components/testing/ConnectionStatus';
+import React from 'react'; // Add this if not already imported
 
 // Create a Devtools component to conditionally load React Query Devtools in development mode
 const Devtools = () => {
@@ -30,22 +31,24 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <ErrorBoundary>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <SupabaseProvider>
-            <AuthProvider>
-              <div className="min-h-screen bg-gray-50">
-                <ConnectionStatus />
-                <AppRoutes />
-                <Notifications />
+    <React.StrictMode>
+      <ErrorBoundary>
+        <BrowserRouter>
+          <QueryClientProvider client={queryClient}>
+            <SupabaseProvider>
+              <AuthProvider>
+                <div className="min-h-screen bg-gray-50">
+                  <ConnectionStatus />
+                  <AppRoutes />
+                  <Notifications />
+                </div>
                 <Devtools />
-              </div>
-            </AuthProvider>
-          </SupabaseProvider>
-        </QueryClientProvider>
-      </BrowserRouter>
-    </ErrorBoundary>
+              </AuthProvider>
+            </SupabaseProvider>
+          </QueryClientProvider>
+        </BrowserRouter>
+      </ErrorBoundary>
+    </React.StrictMode>
   );
 }
 
